@@ -62,5 +62,7 @@ post '/new' do
   db = SQLite3::Database.new 'leprosorium.db'
   db.execute 'insert into Posts (content, created_date) values (?, datetime())', [content]
 
-  erb "You typed #{content}"
+# перенаправление на главную страницу
+
+redirect to '/'
 end
