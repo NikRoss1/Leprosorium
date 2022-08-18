@@ -72,10 +72,30 @@ end
 get '/details/:post_id' do
 	post_id = params[:post_id]
 
+# получаем список постов
+# (у нас будет только один пост)
+
 	db = SQLite3::Database.new 'leprosorium.db'
 	db.results_as_hash = true
 	results = db.execute 'select * from Posts where id = ?',[post_id]
+	
+	# выбираем этот один пост в переменную @row
 	@row = results[0]
 
+	# возвращаем представление details.erb
 	erb :details
+end
+
+# обработчик post запроса /details/...
+# (браузер отправляет данные на серве, мы их принемаем)
+post '/details/:post_id' do
+
+	# получаем переменную из url'a
+	post_id = params[:post_id]
+
+	# получаем переменную из post запроса
+	content = params[:content]
+
+	erb "You typed comment #{content} for post #{post_id}"
+
 end
