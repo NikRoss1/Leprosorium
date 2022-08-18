@@ -52,6 +52,8 @@ post '/new' do
   	return erb :new
   end
 
+  # сохранение данных в ДБ
+
   db = SQLite3::Database.new 'leprosorium.db'
   db.results_as_hash = true
   db.execute 'insert into Posts (content, created_date) values (?, datetime())', [content]
