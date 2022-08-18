@@ -10,8 +10,14 @@ before do
 	db.results_as_hash = true
 end
 
-configure do
+#configure вызывается каждый раз при конфигурации приложения
+#Когда изменился код программы И перезагрузилась страница
+
+configure do 
+	#инициализация базы данных
 	db = SQLite3::Database.new 'leprosorium.db'
+
+	#создает таблицу если таблица не существует
 	db.execute 'CREATE TABLE IF NOT EXISTS Posts
 	(
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,6 +35,8 @@ get '/new' do
 end
 
 post '/new' do
+	#получаем переменную из POST запроса
+
   content = params[:content]
 
   erb "You typed #{content}"
