@@ -51,6 +51,10 @@ post '/new' do
   	@error = 'Type post text'
   	return erb :new
   end
-  
+
+  db = SQLite3::Database.new 'leprosorium.db'
+  db.results_as_hash = true
+  db.execute 'insert into Posts (content, created_date) values (?, datetime())', [content]
+
   erb "You typed #{content}"
 end
