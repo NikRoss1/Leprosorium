@@ -30,7 +30,8 @@ end
 
 get '/' do
 	# выбрать список постов из БД
-
+	db = SQLite3::Database.new 'leprosorium.db'
+	db.results_as_hash = true
 	@results = db.execute 'select * from Posts order by id desc'
 
 	erb	:index		
@@ -59,7 +60,6 @@ post '/new' do
   # сохранение данных в ДБ
 
   db = SQLite3::Database.new 'leprosorium.db'
-  db.results_as_hash = true
   db.execute 'insert into Posts (content, created_date) values (?, datetime())', [content]
 
   erb "You typed #{content}"
