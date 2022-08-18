@@ -4,6 +4,8 @@ require 'sinatra'
 require 'sqlite3'
 #require 'sinatra/reloader'
 
+# befor вызывается каждый раз при перезагрузке
+# любой страницы
 
 before do
 	db = SQLite3::Database.new 'leprosorium.db'
@@ -14,7 +16,7 @@ end
 #Когда изменился код программы И перезагрузилась страница
 
 configure do 
-	#инициализация базы данных
+	#инициализация базы данных БД
 	db = SQLite3::Database.new 'leprosorium.db'
 
 	#создает таблицу если таблица не существует
@@ -30,14 +32,25 @@ get '/' do
 	erb	"Hello"		
 end
 
+# обработчик get-запроса
+# браузер получает страницу с сервера
+
 get '/new' do
   erb :new
 end
+
+# обработчик post-запроса /new
+# браузер отправляет данные на сервер
 
 post '/new' do
 	#получаем переменную из POST запроса
 
   content = params[:content]
 
+  if content.length <= 0
+  	@error = 'Type post text'
+  	return erb :new
+  end
+  
   erb "You typed #{content}"
 end
