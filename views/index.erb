@@ -1,7 +1,7 @@
 <h2>Latest posts</h2>
 <br />
 <% @results.each do |post| %>
-	<p>
+<p>
 		<%= post['content'] %>
 	<br />
 	<br />
@@ -9,6 +9,6 @@
 	<br />
 	<br />
 		<a href="/details/<%= post['id'] %>">Comments</a>
-	</p>
+</p>
 	<hr />
 <% end %>
